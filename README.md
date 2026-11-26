@@ -93,6 +93,7 @@ npm i            # playwright only (browsers come from ~/.cache/ms-playwright)
 node test.mjs          # everything, writes shots/*.png
 node test.mjs home     # one section: home | fly | close | night | ride | reset
 CHROME=/path/to/chrome node test.mjs
+BASE=https://kamjin3086.github.io/sky-whale/ node test.mjs   # same suite against the deployed page
 ```
 
 The harness boots the page in headless Chromium (SwiftShader for WebGL), asserts a clean

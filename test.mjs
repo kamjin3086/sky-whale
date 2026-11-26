@@ -8,6 +8,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 const PORT = 8137, ROOT = process.cwd();
+const BASE = process.env.BASE || '';          // e.g. https://kamjin3086.github.io/sky-whale/
 const ONLY = process.argv[2] || '';
 const SHOTS = path.join(ROOT, 'shots');
 fs.mkdirSync(SHOTS, { recursive: true });
@@ -19,7 +20,7 @@ const ok = (cond, msg, extra = '') => {
 };
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 
-const server = spawn('python3', ['-m', 'http.server', String(PORT), '--bind', '127.0.0.1'],
+const server = BASE ? null : spawn('python3', ['-m', 'http.server', String(PORT), '--bind', '127.0.0.1'],
   { cwd: ROOT, stdio: 'ignore' });
 await sleep(700);
 
@@ -56,7 +57,9 @@ async function brightness(x, y, w, h) {
 }
 
 try {
-  await page.goto(`http://127.0.0.1:${PORT}/index.html?preserve=1`, { waitUntil: 'load' });
+  const url = (BASE || `http://127.0.0.1:${PORT}/index.html`) + (BASE ? (BASE.includes('?') ? '&' : '?') + 'preserve=1' : '?preserve=1');
+  notes.push(`target: ${url}`);
+  await page.goto(url, { waitUntil: 'load' });
   await page.waitForFunction(() => window.__whale?.ready === true, null, { timeout: 30000 });
   const first = await tele();
   ok(!!first, 'telemetry available');
@@ -205,6 +208,6 @@ try {
   console.log('\n' + [...notes, ...fails].join('\n'));
   console.log(`\n${fails.length ? 'FAILED' : 'ALL PASS'} — ${fails.length} failure(s)`);
   await browser.close();
-  server.kill();
+  server?.kill();
   process.exit(fails.length ? 1 : 0);
 }
