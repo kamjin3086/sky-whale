@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="A gentle giant drifting above the clouds, with a little village asleep on its back.">
+<title>The Sky Whale</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Ctext y=%2726%27 font-size=%2726%27%3E%F0%9F%90%B3%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+<div id="stage"></div>
+<div id="grade"></div>
+
+<div id="panel">
+  <h1>The Sky Whale</h1>
+  <p class="sub">A gentle giant drifting above the clouds, with a little village asleep on its back.</p>
+  <div class="grid">
+    <button class="btn cool" id="btn-ride" aria-pressed="false">
+      <svg viewBox="0 0 24 24"><path d="M3 15c3-4 6-4 9 0"/><circle cx="17.5" cy="12.5" r="2.5"/><path d="M21 17H8"/></svg>
+      Ride Along
+    </button>
+    <button class="btn on" id="btn-sunrise">
+      <svg viewBox="0 0 24 24"><path d="M12 4v2M5 7l1.5 1.5M19 7l-1.5 1.5M3 16h18"/><path d="M7.5 16a4.5 4.5 0 0 1 9 0"/></svg>
+      Sunrise
+    </button>
+    <button class="btn" id="btn-night">
+      <svg viewBox="0 0 24 24"><path d="M19 14.5A7.5 7.5 0 0 1 9.5 5a6 6 0 1 0 9.5 9.5z"/></svg>
+      Starry Night
+    </button>
+    <button class="btn" id="btn-reset">
+      <svg viewBox="0 0 24 24"><path d="M20 11a8 8 0 1 0-2.3 5.6"/><path d="M20 4v7h-7"/></svg>
+      Reset View
+    </button>
+  </div>
+  <div class="hint"><b>Drag</b> to look around &middot; <b>scroll</b> to zoom &middot; <b>WASD</b> to fly</div>
+</div>
+
+<div id="keys">
+  <h2>Controls</h2>
+  <dl>
+    <dt>Fly / move</dt><dd>W A S D</dd>
+    <dt>Up / down</dt><dd>Q E</dd>
+    <dt>Sprint</dt><dd>Shift</dd>
+    <dt>Look around</dt><dd>Drag</dd>
+    <dt>Zoom</dt><dd>Scroll</dd>
+    <dt>Ride along</dt><dd>V</dd>
+    <dt>Sunrise / Night</dt><dd>1 / 2</dd>
+    <dt>Reset view</dt><dd>R</dd>
+    <dt>This list</dt><dd>H</dd>
+  </dl>
+</div>
+
+<div id="chip"><span id="fps">-- fps</span><button id="help" title="Controls (H)">?</button></div>
+<div id="boot"><div class="ring"></div><div id="bootmsg">Waking the sky whale&hellip;</div></div>
+
+<!-- three.js is vendored so the scene runs with no network. To track a CDN release instead,
+     swap these two entries for the jsdelivr URLs (same version) and nothing else changes. -->
+<script type="importmap">
+{ "imports": {
+  "three": "./vendor/three.module.js",
+  "three/addons/": "./vendor/addons/"
+} }
+</script>
+<script type="module" src="./src/main.js"></script>
+<script>
+  // if the module graph never boots (no WebGL, blocked script), say so instead of spinning forever
+  setTimeout(() => {
+    if (!window.__whale) {
+      document.getElementById('bootmsg').textContent =
+        'Could not start the scene — this page needs WebGL and the local ./vendor + ./src files.';
+    }
+  }, 12000);
+</script>
+<noscript><div id="boot">This scene needs JavaScript and WebGL.</div></noscript>
+</body>
+</html>

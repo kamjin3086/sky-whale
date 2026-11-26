@@ -1,0 +1,17 @@
+{
+  "name": "sky-whale",
+  "version": "1.0.0",
+  "description": "Three.js sky whale scene",
+  "main": "index.js",
+  "scripts": {
+    "serve": "python3 -m http.server 8137 --bind 127.0.0.1",
+    "test": "node test.mjs"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "playwright": "^1.65.1"
+  }
+}
